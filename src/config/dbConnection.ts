@@ -1,12 +1,17 @@
+import { config } from 'dotenv';
 import { Sequelize } from 'sequelize';
+config();
 
-const username = process.env.DB_USERNAME ?? 'root';
-const database = process.env.DB_DATABASE ?? 'liga';
-const dbhost = process.env.DB_HOST ?? 'localhost';
+const username = process.env.DB_USERNAME as string;
+const database = process.env.DB_DATABASE as string;
+const dbHost = process.env.DB_HOST as string;
+const dbPassword = process.env.DB_PASSWORD as string;
+const dbPort = Number(process.env.DB_PORT);
 
-export const sequelize = new Sequelize(database, username, '', {
-  host: dbhost,
-  dialect: 'mysql'
+export const sequelize = new Sequelize(database, username, dbPassword, {
+  host: dbHost,
+  dialect: 'mysql',
+  port: dbPort
 });
 
 export const connection = async (): Promise<void> => {
