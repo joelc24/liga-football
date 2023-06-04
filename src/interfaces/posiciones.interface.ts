@@ -1,4 +1,4 @@
-export interface IDepartamento {
+export interface IPosicion {
   id?: number;
   nombre: string;
 

@@ -2,7 +2,13 @@ import express, { type Application } from 'express';
 import cors from 'cors';
 
 import { connection } from '@config/dbConnection';
-import { ciudadesRouter, departamentosRouter, equiposRouter } from './routes';
+import {
+  ciudadesRouter,
+  departamentosRouter,
+  equiposRouter,
+  jugadoresRouter,
+  contactoEquipoRouter
+} from './routes';
 
 export class Server {
   private readonly app: Application;
@@ -10,7 +16,9 @@ export class Server {
   private readonly apiPaths = {
     equipos: '/api/equipos',
     departamentos: '/api/departamentos',
-    ciudades: '/api/ciudades'
+    ciudades: '/api/ciudades',
+    jugadores: '/api/jugadores',
+    contactoEquipo: '/api/contacto-equipo'
   };
 
   constructor() {
@@ -35,6 +43,8 @@ export class Server {
     this.app.use(this.apiPaths.equipos, equiposRouter);
     this.app.use(this.apiPaths.departamentos, departamentosRouter);
     this.app.use(this.apiPaths.ciudades, ciudadesRouter);
+    this.app.use(this.apiPaths.jugadores, jugadoresRouter);
+    this.app.use(this.apiPaths.contactoEquipo, contactoEquipoRouter);
   }
 
   listen(): void {

@@ -1,6 +1,7 @@
 import { sequelize } from '@config/dbConnection';
 import { type IEquipo } from '@interfaces/equipo.interface';
 import { DataTypes, type Model } from 'sequelize';
+import Ciudad from './ciudades.models';
 
 const Equipo = sequelize.define<Model<IEquipo>>(
   'equipos',
@@ -25,7 +26,7 @@ const Equipo = sequelize.define<Model<IEquipo>>(
       }
     },
     id_ciudad: {
-      type: DataTypes.NUMBER.UNSIGNED,
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       references: {
         key: 'id',
@@ -47,5 +48,15 @@ const Equipo = sequelize.define<Model<IEquipo>>(
     timestamps: true
   }
 );
+
+Equipo.belongsTo(Ciudad, {
+  foreignKey: 'id_ciudad',
+  as: 'ciudad'
+});
+
+Ciudad.hasMany(Equipo, {
+  foreignKey: 'id_ciudad',
+  as: 'equipos'
+});
 
 export default Equipo;

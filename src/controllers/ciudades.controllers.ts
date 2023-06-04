@@ -36,3 +36,35 @@ export const llenarCiudadesDB = async (req: Request, resp: Response) => {
       .json({ msg: 'Ocurrio un error inesperado, contacte al administrador' });
   }
 };
+
+export const obtenerCiudades = async (req: Request, resp: Response) => {
+  try {
+    const ciudades = await Ciudad.findAll({
+      attributes: ['id', 'nombre', 'id_departamento']
+    });
+
+    return resp.status(200).json({ ciudades });
+  } catch (error) {
+    console.log('Ocurrio un error inesperado: ', error);
+    return resp
+      .status(500)
+      .json({ msg: 'Ocurrio un error inesperado, contacte al administrador' });
+  }
+};
+
+export const obtenerCiudadById = async (req: Request, resp: Response) => {
+  const { id = '' } = req.params;
+
+  try {
+    const ciudad = await Ciudad.findByPk(id, {
+      attributes: ['id', 'nombre', 'id_departamento']
+    });
+
+    return resp.status(200).json({ ciudad });
+  } catch (error) {
+    console.log('Ocurrio un error inesperado: ', error);
+    return resp
+      .status(500)
+      .json({ msg: 'Ocurrio un error inesperado, contacte al administrador' });
+  }
+};

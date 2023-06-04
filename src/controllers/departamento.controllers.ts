@@ -40,8 +40,47 @@ export const llenarDepartamentosDB = async (req: Request, resp: Response) => {
 
 export const obtenertDepartamentos = async (req: Request, resp: Response) => {
   try {
-    const departamentos = await Departamento.findAll({ include: Ciudad });
+    const departamentos = await Departamento.findAll({
+      attributes: ['id', 'nombre']
+    });
     return resp.status(200).json({ departamentos });
+  } catch (error) {
+    console.log('ocurrio un error inesperado: ', error);
+    return resp
+      .status(500)
+      .json({ msg: 'Ocurrio un error inesperado, contacte al adminitrador' });
+  }
+};
+
+export const obtenertDepartamentosConCiudades = async (
+  req: Request,
+  resp: Response
+) => {
+  try {
+    const departamentos = await Departamento.findAll({
+      attributes: ['id', 'nombre'],
+      include: [{ model: Ciudad, attributes: ['id', 'nombre'] }]
+    });
+    return resp.status(200).json({ departamentos });
+  } catch (error) {
+    console.log('ocurrio un error inesperado: ', error);
+    return resp
+      .status(500)
+      .json({ msg: 'Ocurrio un error inesperado, contacte al adminitrador' });
+  }
+};
+
+export const obtenertDepartamentoById = async (
+  req: Request,
+  resp: Response
+) => {
+  const { id = '' } = req.params;
+  try {
+    const departamento = await Departamento.findByPk(id, {
+      attributes: ['id', 'nombre'],
+      include: [{ model: Ciudad, attributes: ['id', 'nombre'] }]
+    });
+    return resp.status(200).json({ departamento });
   } catch (error) {
     console.log('ocurrio un error inesperado: ', error);
     return resp

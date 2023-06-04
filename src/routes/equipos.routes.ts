@@ -5,6 +5,7 @@ import {
   actualizarEquipo,
   borrarEquipo,
   crearEquipo,
+  getEquipos,
   obtenerEquipoPorId,
   obtenerEquipos
 } from '@controllers/equipos.controllers';
@@ -14,7 +15,9 @@ import { existeEquipo } from '@helpers/db-validators';
 
 const router = Router();
 
-router.get('/', obtenerEquipos);
+router.get('/', getEquipos);
+
+router.get('/all', obtenerEquipos);
 
 router.get(
   '/:id',
