@@ -36,8 +36,9 @@ export const insercionMasiva = async (req: Request, resp: Response) => {
       .json({ msg: 'Insercion masiva realizada con exito' });
   } catch (error) {
     console.log('Ocurrio un error: ', error);
-    return resp
-      .status(500)
-      .json({ msg: 'Ocurrio un error inesperado, contacte al administrador' });
+    return resp.status(500).json({
+      msg: 'Ocurrio un error inesperado, contacte al administrador',
+      error
+    });
   }
 };
