@@ -148,6 +148,7 @@ FROM
 
     return resp.status(200).json({ vallaMenosVencida });
   } catch (error) {
+    console.log(error);
     return resp
       .status(500)
       .json({ msg: 'Ocurrio un error inesperado, contacte al administrador' });
