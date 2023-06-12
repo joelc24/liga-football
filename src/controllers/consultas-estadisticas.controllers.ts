@@ -137,7 +137,7 @@ FROM
     JOIN calendarios c ON c.id_equipo_local = e.id
         OR c.id_equipo_visitante = e.id
     JOIN resultados r ON r.id_partido = c.id
-    GROUP BY e.id) AS t`,
+    GROUP BY e.id, e.nombre, e.nombre_completo, e.fundacion, e.id_ciudad) AS t`,
       { model: Equipo, mapToModel: true, type: QueryTypes.SELECT }
     );
 
