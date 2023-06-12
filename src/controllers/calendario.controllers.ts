@@ -35,39 +35,22 @@ export const generarData = async (req: Request, resp: Response) => {
 export const obtenerCalendario = async (req: Request, resp: Response) => {
   try {
     const calendario = await Calendario.findAll({
-      attributes: ['id', 'fecha', 'hora'],
+      attributes: [
+        'id',
+        'fechaPartido',
+        'fecha',
+        'hora',
+        'idEquipoLocal',
+        'idEquipoVisitante'
+      ],
       include: [
         {
           association: 'equipoLocal',
-          attributes: ['id', 'nombre', 'nombreCompleto', 'fundacion'],
-          include: [
-            {
-              association: 'jugadores',
-              attributes: [
-                'id',
-                'nombre',
-                'apellido',
-                'fechaNacimiento',
-                'edad'
-              ]
-            }
-          ]
+          attributes: ['id', 'nombre', 'nombreCompleto', 'fundacion']
         },
         {
           association: 'equipoVisitante',
-          attributes: ['id', 'nombre', 'nombreCompleto', 'fundacion'],
-          include: [
-            {
-              association: 'jugadores',
-              attributes: [
-                'id',
-                'nombre',
-                'apellido',
-                'fechaNacimiento',
-                'edad'
-              ]
-            }
-          ]
+          attributes: ['id', 'nombre', 'nombreCompleto', 'fundacion']
         }
       ]
     });

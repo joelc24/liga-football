@@ -1,7 +1,7 @@
 import ContactoEquipo from '@models/contacto_equipo.models';
 import Equipo from '@models/equipos.models';
 import { type Request, type Response } from 'express';
-import { Sequelize } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 
 export const obtenerInformacionContactoById = async (
   req: Request,
@@ -9,23 +9,29 @@ export const obtenerInformacionContactoById = async (
 ) => {
   const { id } = req.params;
   try {
-    const contactoEquipo = await Equipo.findByPk(id, {
-      attributes: ['nombre'],
-      include: [
-        {
-          model: ContactoEquipo,
-          as: 'contacto',
-          attributes: [
-            'direccion_oficina',
-            'pagina_web',
-            [
-              Sequelize.literal('GROUP_CONCAT(link_red_social SEPARATOR ", ")'),
-              'redesSociales'
-            ]
-          ]
-        }
+    const contactoEquipo = await ContactoEquipo.findOne({
+      attributes: [
+        'id',
+        'idEquipo',
+        'direccionOficina',
+        [
+          Sequelize.fn(
+            'GROUP_CONCAT',
+            Sequelize.literal('DISTINCT pagina_web')
+          ),
+          'paginasWeb'
+        ],
+        [
+          Sequelize.fn(
+            'GROUP_CONCAT',
+            Sequelize.literal('DISTINCT link_red_social')
+          ),
+          'linkRedesSociales'
+        ]
       ],
-      group: ['equipos.nombre']
+      where: {
+        idEquipo: id
+      }
     });
     return resp.status(200).json({ contactoEquipo });
   } catch (error) {

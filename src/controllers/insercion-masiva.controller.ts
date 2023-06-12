@@ -1,9 +1,9 @@
+import { CalendarioData } from '@data/calendario.data';
 import { contactoEquiposData } from '@data/contacto-equipos.data';
 import { equiposData } from '@data/equipos.data';
+import { dataGoles, dataResultado } from '@data/goles-resultados.data';
 import { jugadoresData } from '@data/jugadores.data';
 import { posicionesData } from '@data/posiciones.data';
-import { calendarioGenerado } from '@helpers/generar-calendario';
-import { goleResultadosGenerados } from '@helpers/generar-goles';
 import Calendario from '@models/calendario.models';
 import ContactoEquipo from '@models/contacto_equipo.models';
 import Equipo from '@models/equipos.models';
@@ -19,16 +19,8 @@ export const insercionMasiva = async (req: Request, resp: Response) => {
     await Equipo.bulkCreate(equiposData);
     await ContactoEquipo.bulkCreate(contactoEquiposData);
     await Jugador.bulkCreate(jugadoresData);
-    const equipos = (await Equipo.findAll({ attributes: ['id'] })).map(
-      (equipo) => ({ id: equipo.toJSON().id })
-    );
 
-    const calendarios = await calendarioGenerado(
-      equipos as Array<{ id: number }>
-    );
-    await Calendario.bulkCreate(calendarios);
-
-    const { dataGoles, dataResultado } = await goleResultadosGenerados();
+    await Calendario.bulkCreate(CalendarioData);
     await Gol.bulkCreate(dataGoles);
     await Resultado.bulkCreate(dataResultado);
     return resp

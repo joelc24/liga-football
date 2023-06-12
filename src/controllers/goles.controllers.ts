@@ -1,3 +1,4 @@
+import { goleResultadosGenerados } from '@helpers/generar-goles';
 import Calendario from '@models/calendario.models';
 import Equipo from '@models/equipos.models';
 import Gol from '@models/gol.models';
@@ -9,18 +10,15 @@ export const obtenerGoles = async (req: Request, resp: Response) => {
       attributes: ['id', 'minuto'],
       include: [
         {
-          model: Calendario,
-          as: 'partido',
+          association: 'partido',
           attributes: ['id', 'fecha', 'hora'],
           include: [
             {
-              model: Equipo,
-              as: 'equipo_local',
+              association: 'equipoLocal',
               attributes: ['id', 'nombre', 'nombre_completo', 'fundacion']
             },
             {
-              model: Equipo,
-              as: 'equipo_visitante',
+              association: 'equipoVisitante',
               attributes: ['id', 'nombre', 'nombre_completo', 'fundacion']
             }
           ]
@@ -30,6 +28,18 @@ export const obtenerGoles = async (req: Request, resp: Response) => {
     return resp.status(200).json({ goles });
   } catch (error) {
     console.log('ocurrio un error: ', error);
+    return resp
+      .status(500)
+      .json({ msg: 'Ocurrio un error inesperado, contacte al administrador' });
+  }
+};
+
+export const generarGoles = async (req: Request, resp: Response) => {
+  try {
+    const data = await goleResultadosGenerados();
+
+    return resp.status(200).json(data);
+  } catch (error) {
     return resp
       .status(500)
       .json({ msg: 'Ocurrio un error inesperado, contacte al administrador' });
