@@ -28,7 +28,9 @@ module.exports = {
                     '@utils': './src/utils'
                 }
             }
-        ]
+        ],
+        ["@babel/plugin-proposal-decorators", { legacy: true }],
+        ["@babel/plugin-proposal-class-properties", { loose: true }]
     ],
-    ignore: ['**/*.spec.ts', 'src/migrations/*', 'src/seeders/*', 'moment-random.d.ts']
+    ignore: ['**/*.spec.ts', 'src/migrations/*', 'src/seeders/*']
 };
