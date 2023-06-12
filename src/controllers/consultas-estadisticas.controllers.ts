@@ -119,12 +119,7 @@ export const obtenerVallaMenosVencida = async (
 ) => {
   try {
     const vallaMenosVencida = await sequelize.query(
-      `SELECT 
-    t.id,
-    t.nombre,
-    t.nombre_completo,
-    t.fundacion,
-    t.id_ciudad,
+      `SELECT t.*,
     MIN(t.goles_en_contra) AS golesEnContra
 FROM
     (SELECT 
