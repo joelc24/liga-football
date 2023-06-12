@@ -1,9 +1,7 @@
 import { type Response, type Request } from 'express';
 import Calendario from '@models/calendario.models';
 import Equipo from '@models/equipos.models';
-import Gol from '@models/gol.models';
 import Jugador from '@models/jugadores.models';
-import Resultado from '@models/resultado.model';
 import { Sequelize } from 'sequelize-typescript';
 import { sequelize } from '@config/dbConnection';
 import { QueryTypes } from 'sequelize';
@@ -53,7 +51,7 @@ export const obtenerCalendarioPorFecha = async (
 
   try {
     const calendario = await Calendario.findAll({
-      attributes: ['id', 'fecha', 'hora'],
+      attributes: ['id', 'fecha', 'fechaPartido', 'hora'],
       include: [
         {
           association: 'equipoLocal',
@@ -69,7 +67,7 @@ export const obtenerCalendarioPorFecha = async (
       }
     });
 
-    return resp.status(500).json({ calendario });
+    return resp.status(200).json({ calendario });
   } catch (error) {
     return resp
       .status(500)

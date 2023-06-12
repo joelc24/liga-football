@@ -43,7 +43,7 @@ export const obtenerCiudades = async (req: Request, resp: Response) => {
       attributes: ['id', 'nombre', 'id_departamento']
     });
 
-    return resp.status(200).json({ ciudades });
+    return resp.status(200).json(ciudades);
   } catch (error) {
     console.log('Ocurrio un error inesperado: ', error);
     return resp

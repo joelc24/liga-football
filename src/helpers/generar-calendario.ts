@@ -40,7 +40,8 @@ const asignarFechas: AsignarFechas = (
 ): ICalendario[] => {
   let date = new Date();
   let iteracionDia = 1;
-
+  let iteracionFecha = 0;
+  let fecha = 1;
   return partidos.map((partido) => {
     const maxhour = randomInt(9, 22);
     let maxMinute = randomInt(0, 60);
@@ -52,10 +53,18 @@ const asignarFechas: AsignarFechas = (
 
     iteracionDia === 9 ? (iteracionDia = 0) : (iteracionDia += 1);
 
+    if (iteracionFecha === 10) {
+      fecha += 1;
+      iteracionFecha = 1;
+    } else {
+      iteracionFecha += 1;
+    }
+
     return {
       ...partido,
-      fecha: format(date, 'MM/dd/yyyy'),
-      hora: `${maxhour}:${maxMinute}:00`
+      fechaPartido: format(date, 'MM/dd/yyyy'),
+      hora: `${maxhour}:${maxMinute}:00`,
+      fecha
     };
   });
 };

@@ -18,9 +18,10 @@ interface ICalendarioCreationAttributes extends Optional<ICalendario, 'id'> {}
 class Calendario extends Model<ICalendario, ICalendarioCreationAttributes> {
   @Column({
     allowNull: false,
-    type: DataType.DATEONLY
+    type: DataType.DATEONLY,
+    field: 'fecha_partido'
   })
-  public fecha!: Date | string;
+  public fechaPartido!: Date | string;
 
   @Column({
     allowNull: false,
@@ -51,6 +52,12 @@ class Calendario extends Model<ICalendario, ICalendarioCreationAttributes> {
     }
   })
   public idEquipoVisitante!: number;
+
+  @Column({
+    allowNull: false,
+    type: DataType.INTEGER.UNSIGNED
+  })
+  public fecha!: string;
 
   @BelongsTo(() => Equipo, 'idEquipoLocal')
   public equipoLocal!: Equipo;

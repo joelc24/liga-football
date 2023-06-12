@@ -1,9 +1,10 @@
 export interface ICalendario {
   id?: number;
-  fecha: Date | string;
+  fechaPartido: Date | string;
   hora: string;
   idEquipoLocal: number;
   idEquipoVisitante: number;
+  fecha: number;
 
   createdAt?: Date;
   updatedAt?: Date;
