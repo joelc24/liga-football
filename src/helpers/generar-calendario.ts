@@ -44,7 +44,7 @@ const asignarFechas: AsignarFechas = (
   let fecha = 1;
   return partidos.map((partido) => {
     const maxhour = randomInt(9, 22);
-    let maxMinute = randomInt(0, 60);
+    let maxMinute = randomInt(0, 59);
     maxMinute = maxMinute < 10 ? Number(`0${maxMinute}`) : maxMinute;
 
     if ([0, 3, 6, 8].includes(iteracionDia)) {
