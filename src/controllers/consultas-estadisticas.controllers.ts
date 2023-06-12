@@ -119,25 +119,26 @@ export const obtenerVallaMenosVencida = async (
 ) => {
   try {
     const vallaMenosVencida = await sequelize.query(
-      `SELECT t.*,
-    MIN(t.goles_en_contra) AS golesEnContra
-FROM
-    (SELECT 
-        e.id,
-            e.nombre,
-            e.nombre_completo,
-            e.fundacion,
-            e.id_ciudad,
-            SUM(CASE
-                WHEN c.id_equipo_local = e.id THEN r.goles_visitante
-                ELSE r.goles_local
-            END) AS goles_en_contra
-    FROM
-        equipos e
-    JOIN calendarios c ON c.id_equipo_local = e.id
-        OR c.id_equipo_visitante = e.id
-    JOIN resultados r ON r.id_partido = c.id
-    GROUP BY e.id, e.nombre, e.nombre_completo, e.fundacion, e.id_ciudad) AS t`,
+      `SELECT 
+      t.*, MIN(t.goles_en_contra) AS golesEnContra
+  FROM
+      (SELECT 
+          e.id,
+              e.nombre,
+              e.nombre_completo,
+              e.fundacion,
+              e.id_ciudad,
+              SUM(CASE
+                  WHEN c.id_equipo_local = e.id THEN r.goles_visitante
+                  ELSE r.goles_local
+              END) AS goles_en_contra
+      FROM
+          equipos e
+      JOIN calendarios c ON c.id_equipo_local = e.id
+          OR c.id_equipo_visitante = e.id
+      JOIN resultados r ON r.id_partido = c.id
+      GROUP BY e.id , e.nombre , e.nombre_completo , e.fundacion , e.id_ciudad) AS t
+  GROUP BY t.id , t.nombre , t.nombre_completo , t.fundacion , t.id_ciudad`,
       { model: Equipo, mapToModel: true, type: QueryTypes.SELECT }
     );
 
