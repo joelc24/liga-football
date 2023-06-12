@@ -3,3 +3,8 @@ export { default as departamentosRouter } from './departamento.routes';
 export { default as equiposRouter } from './equipos.routes';
 export { default as jugadoresRouter } from './jugadores.routes';
 export { default as contactoEquipoRouter } from './contacto-equipo.routes';
+export { default as calendarioRouter } from './calendario.routes';
+export { default as truncarTablesRouter } from './truncar-tables.routes';
+export { default as insercionMasivaRouter } from './insercion-masiva.routes';
+export { default as golesRouter } from './gol.routes';
+export { default as consultasEstidisticasRouter } from './consultas-estadisticas.routes';

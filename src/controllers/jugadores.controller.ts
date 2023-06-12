@@ -7,7 +7,7 @@ import { type Request, type Response } from 'express';
 export const obtenerJugadores = async (req: Request, resp: Response) => {
   try {
     const jugadores = await Jugador.findAll({
-      attributes: ['id', 'nombre', 'apellido', 'fecha_nacimiento', 'edad']
+      attributes: ['id', 'nombre', 'apellido', 'fechaNacimiento', 'edad']
     });
     return resp.status(200).json({ jugadores });
   } catch (error) {
@@ -24,12 +24,12 @@ export const obtenerJugadoresConRelaciones = async (
 ) => {
   try {
     const jugadores = await Jugador.findAll({
-      attributes: ['id', 'nombre', 'apellido', 'fecha_nacimiento', 'edad'],
+      attributes: ['id', 'nombre', 'apellido', 'fechaNacimiento', 'edad'],
       include: [
         {
           model: Equipo,
           as: 'equipo',
-          attributes: ['id', 'nombre', 'nombre_completo', 'fundacion'],
+          attributes: ['id', 'nombre', 'nombreCompleto', 'fundacion'],
           include: [{ model: Ciudad, as: 'ciudad', attributes: ['nombre'] }]
         },
         { model: Posicion, as: 'posicion', attributes: ['nombre'] }

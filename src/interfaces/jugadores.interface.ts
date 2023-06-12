@@ -2,10 +2,10 @@ export interface IJugador {
   id?: number;
   nombre: string;
   apellido: string;
-  fecha_nacimiento: Date;
+  fechaNacimiento: Date | string;
   edad?: number;
-  id_posicion: number;
-  id_equipo: number;
+  idPosicion: number;
+  idEquipo: number;
 
   createdAt?: Date;
   updatedAt?: Date;

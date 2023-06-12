@@ -5,10 +5,6 @@ import { type IError } from '@interfaces/error.interface';
 
 import { formatErrorsSequelize } from '@helpers/formatear-errors-sequelize';
 import Equipo from '@models/equipos.models';
-import Ciudad from '@models/ciudades.models';
-import Jugador from '@models/jugadores.models';
-import Posicion from '@models/posiciones.models';
-import ContactoEquipo from '@models/contacto_equipo';
 
 export const getEquipos = async (req: Request, resp: Response) => {
   try {
@@ -28,35 +24,34 @@ export const getEquipos = async (req: Request, resp: Response) => {
 export const obtenerEquipos = async (req: Request, resp: Response) => {
   try {
     const equipos = await Equipo.findAll({
-      attributes: ['id', 'nombre', 'nombre_completo', 'fundacion'],
+      attributes: ['id', 'nombre', 'nombreCompleto', 'fundacion'],
       include: [
         {
-          model: ContactoEquipo,
-          as: 'contacto',
+          association: 'contacto',
           attributes: [
-            'direccion_oficina',
-            'pagina_web',
+            'direccionOficina',
+            'paginaWeb',
             [
-              Sequelize.literal('GROUP_CONCAT(link_red_social SEPARATOR ", ")'),
+              Sequelize.fn(
+                'GROUP_CONCAT',
+                Sequelize.literal('DISTINCT link_red_social')
+              ),
               'redesSociales'
             ]
           ]
         },
-        { model: Ciudad, as: 'ciudad', attributes: ['id', 'nombre'] },
+        { association: 'ciudad', attributes: ['id', 'nombre'] },
         {
-          model: Jugador,
-          as: 'jugadores',
-          attributes: ['id', 'nombre', 'apellido', 'fecha_nacimiento', 'edad'],
-          include: [
-            { model: Posicion, as: 'posicion', attributes: ['id', 'nombre'] }
-          ]
+          association: 'jugadores',
+          attributes: ['id', 'nombre', 'apellido', 'fechaNacimiento', 'edad'],
+          include: [{ association: 'posicion', attributes: ['id', 'nombre'] }]
         }
       ],
       group: [
-        'equipos.id',
-        'equipos.nombre',
-        'equipos.nombre_completo',
-        'equipos.fundacion'
+        'equipo.id',
+        'equipo.nombre',
+        'equipo.nombre_completo',
+        'equipo.fundacion'
       ]
     });
 

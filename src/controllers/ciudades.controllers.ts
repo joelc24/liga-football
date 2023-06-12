@@ -16,7 +16,7 @@ export const llenarCiudadesDB = async (req: Request, resp: Response) => {
     let ciudades: ICiudad[] = data.map((ciudad) => ({
       id: ciudad.id,
       nombre: ciudad.name,
-      id_departamento: ciudad.departmentId
+      idDepartamento: ciudad.departmentId
     }));
 
     ciudades = ciudades.sort((a, b) => (a?.id && b?.id ? a.id - b.id : 0));

@@ -1,5 +1,5 @@
 *config.js
 node_modules/
 dist/
-src/seeders
-src/migrations
+# src/seeders
+# src/migrations

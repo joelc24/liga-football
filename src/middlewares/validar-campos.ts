@@ -6,14 +6,14 @@ import { validationResult } from 'express-validator';
  * debe de ir al final despues de todos los demas middlewares
  * */
 export const validarCampos = (
-    req: Request,
-    resp: Response,
-    next: NextFunction
+  req: Request,
+  resp: Response,
+  next: NextFunction
 ) => {
-    const errors = validationResult(req);
+  const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-        return resp.status(400).json(errors);
-    }
-    next();
+  if (!errors.isEmpty()) {
+    return resp.status(400).json(errors);
+  }
+  next();
 };

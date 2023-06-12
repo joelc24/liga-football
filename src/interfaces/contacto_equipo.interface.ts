@@ -1,9 +1,9 @@
-export interface IContacto_Equipo {
+export interface IContactoEquipo {
   id?: number;
-  pagina_web: string;
-  direccion_oficina: string;
-  link_red_social: string;
-  id_equipo: number;
+  paginaWeb: string;
+  direccionOficina: string;
+  linkRedSocial: string;
+  idEquipo: number;
 
   createdAt?: Date;
   updatedAt?: Date;

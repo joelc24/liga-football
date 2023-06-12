@@ -1,5 +1,6 @@
 import { config } from 'dotenv';
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
+import AllModels from '@models/index';
 config();
 
 const username = process.env.DB_USERNAME as string;
@@ -8,10 +9,20 @@ const dbHost = process.env.DB_HOST as string;
 const dbPassword = process.env.DB_PASSWORD as string;
 const dbPort = Number(process.env.DB_PORT);
 
-export const sequelize = new Sequelize(database, username, dbPassword, {
+export const sequelize = new Sequelize({
+  database,
+  username,
+  password: dbPassword,
   host: dbHost,
   dialect: 'mysql',
-  port: dbPort
+  port: dbPort,
+  models: [...AllModels]
+  // models: [path.resolve(__dirname, '/models/**/*models.ts')],
+  // modelMatch: (filename, member) => {
+  //   return (
+  //     filename.substring(0, filename.indexOf('.model')) === member.toLowerCase()
+  //   );
+  // }
 });
 
 export const connection = async (): Promise<void> => {

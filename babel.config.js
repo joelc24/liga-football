@@ -23,10 +23,12 @@ module.exports = {
                     '@interfaces': './src/interfaces',
                     '@helpers': './src/helpers',
                     '@enums': './src/enums',
-                    '@api': './src/api'
+                    '@api': './src/api',
+                    '@data': './src/data',
+                    '@utils': './src/utils'
                 }
             }
         ]
     ],
-    ignore: ['**/*.spec.ts', 'src/migrations/*', 'src/seeders/*']
+    ignore: ['**/*.spec.ts', 'src/migrations/*', 'src/seeders/*', 'moment-random.d.ts']
 };

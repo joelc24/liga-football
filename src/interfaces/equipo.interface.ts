@@ -1,8 +1,8 @@
 export interface IEquipo {
   id?: number;
   nombre: string;
-  nombre_completo: string;
-  id_ciudad: number;
+  nombreCompleto: string;
+  idCiudad: number;
   fundacion: string;
 
   createdAt?: Date;

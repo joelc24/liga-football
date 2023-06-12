@@ -1,5 +1,5 @@
 import Ciudad from '@models/ciudades.models';
-import ContactoEquipo from '@models/contacto_equipo';
+import ContactoEquipo from '@models/contacto_equipo.models';
 import Departamento from '@models/departamentos.models';
 import Equipo from '@models/equipos.models';
 import Jugador from '@models/jugadores.models';
@@ -10,7 +10,6 @@ import Jugador from '@models/jugadores.models';
  * el cual busca por el id
  *
  *  */
-
 export const existeEquipo = async (id = ''): Promise<boolean> => {
   const equipo = await Equipo.findByPk(id);
 

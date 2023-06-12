@@ -6,3 +6,6 @@ export * from './equipo.interface';
 export * from './error.interface';
 export * from './jugadores.interface';
 export * from './posiciones.interface';
+export * from './calendario.interface';
+export * from './gol.models';
+export * from './resultado.interface';
