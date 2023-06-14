@@ -8,7 +8,8 @@ import {
   generarData,
   insercionMasiva,
   insertarCalendario,
-  obtenerCalendario
+  obtenerCalendario,
+  obtenerJugadoresPartido
 } from '@controllers/calendario.controllers';
 
 const router = Router();
@@ -17,14 +18,20 @@ router.get('/generar-calendario', generarData);
 
 router.get('/', obtenerCalendario);
 
+router.get(
+  '/:id/jugadores',
+  [check('id', 'El id del partido es requerido').notEmpty(), validarCampos],
+  obtenerJugadoresPartido
+);
+
 router.post(
   '/insercion',
   [
     check('fecha', 'La fehca es requerida').notEmpty,
     check('hora', 'La hora es requerida').notEmpty(),
-    check('id_equipo_local', 'El id del equipo local es requerido').notEmpty(),
+    check('idEquipoLocal', 'El id del equipo local es requerido').notEmpty(),
     check(
-      'id_equipo_visitante',
+      'idEquipoVisitante',
       'El id del equipo visitante es requerido'
     ).notEmpty(),
     validarCampos

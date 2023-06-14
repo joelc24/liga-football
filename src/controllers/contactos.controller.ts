@@ -1,7 +1,7 @@
-import ContactoEquipo from '@models/contacto_equipo.models';
-import Equipo from '@models/equipos.models';
 import { type Request, type Response } from 'express';
-import { Op, Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize';
+
+import ContactoEquipo from '@models/contacto_equipo.models';
 
 export const obtenerInformacionContactoById = async (
   req: Request,

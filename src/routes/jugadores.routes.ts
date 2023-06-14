@@ -4,7 +4,8 @@ import {
   eliminarJugador,
   obtenerJugadorById,
   obtenerJugadores,
-  obtenerJugadoresConRelaciones
+  obtenerJugadoresConRelaciones,
+  obtenerPosiciones
 } from '@controllers/jugadores.controller';
 import { existeJugador } from '@helpers/db-validators';
 import { validarCampos } from '@middlewares/validar-campos';
@@ -18,7 +19,7 @@ router.get('/', obtenerJugadores);
 router.get('/all', obtenerJugadoresConRelaciones);
 
 router.get(
-  '/:id',
+  '/jugador/:id',
   [
     check('id', 'El id es requerido').notEmpty(),
     check('id').custom(existeJugador),
@@ -26,6 +27,8 @@ router.get(
   ],
   obtenerJugadorById
 );
+
+router.get('/posiciones', obtenerPosiciones);
 
 router.post(
   '/',

@@ -112,3 +112,15 @@ export const eliminarJugador = async (req: Request, resp: Response) => {
       .json({ msg: 'Ocurrio un error inesperado, contacte al adminitrador' });
   }
 };
+
+export const obtenerPosiciones = async (req: Request, resp: Response) => {
+  try {
+    const posiciones = await Posicion.findAll();
+    return resp.status(200).json({ posiciones });
+  } catch (error) {
+    console.log('ocurrio un error: ', error);
+    return resp
+      .status(500)
+      .json({ msg: 'Ocurrio un error inesperado, contacta al administrador' });
+  }
+};

@@ -64,12 +64,53 @@ export const obtenerCalendario = async (req: Request, resp: Response) => {
   }
 };
 
+export const obtenerJugadoresPartido = async (req: Request, resp: Response) => {
+  const { id } = req.params;
+
+  try {
+    const jugadoresPartido = await Calendario.findByPk(id, {
+      attributes: [],
+      include: [
+        {
+          association: 'equipoLocal',
+          attributes: ['id', 'nombre'],
+          include: [
+            {
+              association: 'jugadores',
+              attributes: ['id', 'nombre', 'apellido']
+            }
+          ]
+        },
+        {
+          association: 'equipoVisitante',
+          attributes: ['id', 'nombre', 'nombreCompleto', 'fundacion'],
+          include: [
+            {
+              association: 'jugadores',
+              attributes: ['id', 'nombre', 'apellido']
+            }
+          ]
+        }
+      ]
+    });
+
+    return resp.status(200).json({ jugadoresPartido });
+  } catch (error) {
+    console.log('ocurrio un error: ', error);
+    return resp
+      .status(500)
+      .json({ msg: 'Ocurrio un error inesperado, contacte al administrador' });
+  }
+};
+
 export const insertarCalendario = async (req: Request, resp: Response) => {
   const { id, ...body } = req.body;
 
   try {
-    const calendario = Calendario.build(body);
-    await calendario.save();
+    const calendarioToDb = Calendario.build(body);
+    await calendarioToDb.save();
+
+    const { createdAt, updatedAt, ...calendario } = calendarioToDb.toJSON();
 
     return resp.status(201).json({ calendario });
   } catch (error) {

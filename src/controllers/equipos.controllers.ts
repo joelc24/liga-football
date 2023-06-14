@@ -9,7 +9,7 @@ import Equipo from '@models/equipos.models';
 export const getEquipos = async (req: Request, resp: Response) => {
   try {
     const equipos = await Equipo.findAll({
-      attributes: ['id', 'nombre', 'nombre_completo', 'fundacion']
+      attributes: ['id', 'nombre', 'nombreCompleto', 'fundacion']
     });
 
     return resp.status(200).json({ equipos });
@@ -93,8 +93,10 @@ export const crearEquipo = async (req: Request, resp: Response) => {
   const { id, ...body } = req.body;
 
   try {
-    const equipo = Equipo.build(body);
-    await equipo.save();
+    const equipoToBD = Equipo.build(body);
+    await equipoToBD.save();
+
+    const { createdAt, updatedAt, ...equipo } = equipoToBD.toJSON();
 
     return resp.status(201).json({ equipo });
   } catch (error) {

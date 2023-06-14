@@ -37,10 +37,10 @@ router.post(
       'El nombre debe contener al menos tres caracteres'
     ).isLength({ min: 3 }),
     check(
-      'nombre_completo',
+      'nombreCompleto',
       'El nombre completo debe contener al menos tres caracteres'
     ).isLength({ min: 3 }),
-    check('ciudad', 'La ciudad es requerida').notEmpty(),
+    check('idCiudad', 'La ciudad es requerida').notEmpty(),
     check(
       'fundacion',
       'El año de fundacion del equipo es requerido'
@@ -60,7 +60,7 @@ router.put(
       'El nombre debe contener al menos tres caracteres'
     ).isLength({ min: 3 }),
     check(
-      'nombre_completo',
+      'nombreCompleto',
       'El nombre debe contener al menos tres caracteres'
     ).isLength({ min: 3 }),
     check('ciudad', 'La ciudad es requerida').notEmpty(),
